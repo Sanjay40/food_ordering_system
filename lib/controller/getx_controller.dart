@@ -4,13 +4,18 @@ import 'package:food_ordering_system/view/AddToCart.dart';
 import 'package:food_ordering_system/view/favourite.dart';
 import 'package:get/get.dart';
 
+
+CollectionReference collection = FirebaseFirestore.instance .collection('Order_food_list')
+    .doc('All_food_list')
+    .collection(HomeController().category.value);
+
 class HomeController extends GetxController{
     RxInt currentIndex  = 0.obs;
     List getData = [];
-    CollectionReference collection = FirebaseFirestore.instance.collection('Food_list');
+
     bool changeFavouriteValue = false;
-    int changeQuantity = 1;
-    int totalPrice = 0;
+    RxInt changeQuantity = 1.obs;
+    RxString category = 'All'.obs;
     final searchText = ValueNotifier("");
     RxList AddToCart = [].obs;
     tabIndex(int val){
@@ -28,7 +33,7 @@ class HomeController extends GetxController{
       var docId = docSnap.docs;
       return collection
           .doc(docId[index].id)
-         .update({'foodFavourite' : changeFavData})
+         .update({'favourite' : changeFavData})
           .then((value) => print("User Update") )
           .catchError((error) => print("Error $error"));
 
@@ -39,7 +44,7 @@ class HomeController extends GetxController{
       var docId = docSnap.docs;
       return collection
           .doc(docId[index].id)
-          .update({'foodQuantity' : changeQuantity})
+          .update({'quantity' : changeQuantity})
           .then((value) => print("User Update") )
           .catchError((error) => print("Error $error"));
 

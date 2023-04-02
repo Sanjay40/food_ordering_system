@@ -37,7 +37,7 @@ class _AddToCartScreenState extends State<AddToCartScreen> {
             ),
           ),
           centerTitle: true,
-          title: Text("AddtoCart",
+          title: Text("AddToCart",
             style: GoogleFonts.poppins(
               fontSize: 16,
               fontWeight: FontWeight.w700,
@@ -83,7 +83,7 @@ class _AddToCartScreenState extends State<AddToCartScreen> {
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text("${homeController.AddToCart[index]['foodName']}",
+                                  Text("${homeController.AddToCart[index]['name']}",
                                     style: GoogleFonts.poppins(
                                         fontSize: 18,
                                         fontWeight: FontWeight.w600
@@ -109,7 +109,7 @@ class _AddToCartScreenState extends State<AddToCartScreen> {
                               ),
                             ),
                             const SizedBox(height: 15,),
-                            Text("\$ ${homeController.getData[index]['foodPrice'] * homeController.getData[index]['foodQuantity']}",
+                            Text("\$ ${homeController.getData[index]['price'] * homeController.getData[index]['quantity']}",
                               style: GoogleFonts.poppins(
                                   fontSize: 15,
                                   fontWeight: FontWeight.w600,

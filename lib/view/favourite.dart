@@ -52,7 +52,7 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
           return ListView.builder(
             itemCount: controller.getData.length,
             itemBuilder: (context,index){
-              return (controller.getData[index]['foodFavourite'] == true) ? Padding(
+              return (controller.getData[index]['favourite'] == true) ? Padding(
                 padding: const EdgeInsets.only(left: 15,right: 15,top: 15),
                 child: Container(
                   height: 110,
@@ -82,14 +82,14 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text("${controller.getData[index]['foodName']}",
+                              Text("${controller.getData[index]['name']}",
                                 style: GoogleFonts.poppins(
                                     fontSize: 18,
                                     fontWeight: FontWeight.w600
                                 ),
                               ),
                               SizedBox(height: 15,),
-                              Text("\$ ${controller.getData[index]['foodPrice']}",
+                              Text("\$ ${controller.getData[index]['price']}",
                                 style: GoogleFonts.poppins(
                                     fontSize: 19,
                                     fontWeight: FontWeight.w600,
