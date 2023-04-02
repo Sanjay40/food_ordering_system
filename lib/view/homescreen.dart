@@ -75,7 +75,7 @@ class _HomeScreenState extends State<HomeScreen> {
         builder: (HomeController controller) {
           return Column(
             children: [
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               StreamBuilder(
@@ -87,7 +87,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     print("Data is error");
                   } else if (snapshot.connectionState ==
                       ConnectionState.waiting) {
-                    return Center(
+                    return const Center(
                       child: CircularProgressIndicator(),
                     );
                   }
@@ -111,12 +111,15 @@ class _HomeScreenState extends State<HomeScreen> {
                   );
                 },
               ),
-              SizedBox(
+              const SizedBox(
                 height: 30,
               ),
               Padding(
                 padding: const EdgeInsets.only(left: 25, right: 25),
                 child: TextFormField(
+                  onChanged: (val){
+                    controller.searchText.value = val;
+                  },
                   decoration: InputDecoration(
                     hintText: "Search Your Food...",
                     hintStyle: GoogleFonts.poppins(
@@ -145,7 +148,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       fontSize: 16),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 15,
               ),
               Align(
@@ -172,7 +175,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     print("Data is error");
                   } else if (snapshot.connectionState ==
                       ConnectionState.waiting) {
-                    return Center(
+                    return const Center(
                       child: CircularProgressIndicator(),
                     );
                   }
@@ -182,7 +185,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       padding: const EdgeInsets.all(8.0),
                       child: GridView.builder(
                         itemCount: snapshot.data!.docs.length,
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: 2, childAspectRatio: 1 / 1.3),
                         itemBuilder: (context, index) {
                           homeController.getData = snapshot.data!.docs;
@@ -211,10 +214,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                         ),
                                       ),
                                     ),
-                                    SizedBox(
+                                    const SizedBox(
                                       height: 10,
                                     ),
-                                    Center(
+                                    const Center(
                                       child: Image(
                                         image: AssetImage('images/spp11.png'),
                                         height: 100,
@@ -236,9 +239,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                           left: 20, top: 5, right: 15),
                                       child: Row(
                                         mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
+                                        MainAxisAlignment.spaceBetween,
                                         children: [
-//Text("${snapshot.data!.docs.length - 1}"),
+                                          //Text("${snapshot.data!.docs.length - 1}"),
                                           Text(
                                             "\$ ${snapshot.data!.docs[index]['foodPrice']}",
                                             style: GoogleFonts.poppins(
@@ -248,13 +251,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                           ),
                                           GestureDetector(
                                             onTap: () =>
-                                                Get.to(() => DetailsScreen(
-                                                      index: index,
-                                                    )),
+                                                Get.to(() => DetailsScreen(index: index)),
                                             child: CircleAvatar(
                                               radius: 18,
                                               backgroundColor: Variable.myClr,
-                                              child: Icon(
+                                              child: const Icon(
                                                 Icons
                                                     .shopping_cart_checkout_outlined,
                                                 color: Colors.white,
