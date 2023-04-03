@@ -1,5 +1,31 @@
 # food_ordering_system
 
+<table>
+<tr>
+</tr>
+<tr>
+    <td><img src="images/s1.png" </td>
+    <td><img src="images/s2.png" </td>
+    <td><img src="images/s3.png" </td>
+</tr>
+<tr>
+    <td><img src="images/s4.png" </td>
+    <td><img src="images/s5.png" </td>
+    <td><img src="images/s6.png" </td>
+</tr>
+<tr>
+    <td><img src="images/s7.png" </td>
+    <td><img src="images/s8.png" </td>
+    <td><img src="images/s9.png" </td>
+</tr>
+<tr>
+    <td><img src="images/s10.png" </td>
+    <td><img src="images/s11.png" </td>
+</tr>
+</table>
+
+
+
 A new Flutter project.
 
 ## Getting Started
