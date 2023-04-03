@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../controller/getx_controller.dart';
@@ -22,20 +21,6 @@ class _AddToCartScreenState extends State<AddToCartScreen> {
         appBar: AppBar(
           backgroundColor:Colors.grey.shade100,
           elevation: 0,
-          leadingWidth: 60,
-          leading: Padding(
-            padding: const EdgeInsets.only(left: 20,top: 10),
-            child: GestureDetector(
-              onTap: () => Get.back(),
-              child: CircleAvatar(
-                backgroundColor: Colors.white,
-                child: Icon(Icons.arrow_back,
-                  color: Variable.myClr,
-                  size:25,
-                ),
-              ),
-            ),
-          ),
           centerTitle: true,
           title: Text("AddToCart",
             style: GoogleFonts.poppins(
@@ -74,11 +59,11 @@ class _AddToCartScreenState extends State<AddToCartScreen> {
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.only(left: 15,top: 20),
+                        padding: const EdgeInsets.only(left: 15,top: 20),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Container(
+                            SizedBox(
                               width: 250,
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -100,7 +85,7 @@ class _AddToCartScreenState extends State<AddToCartScreen> {
                                         onTap: (){
                                           homeController.AddToCart.remove(homeController.AddToCart[index]);
                                         },
-                                        child: Icon(Icons.remove,
+                                        child: const Icon(Icons.remove,
                                           size: 15,
                                         ),
                                       )
@@ -109,20 +94,20 @@ class _AddToCartScreenState extends State<AddToCartScreen> {
                               ),
                             ),
                             const SizedBox(height: 15,),
-                            Text("\$ ${homeController.getData[index]['price'] * homeController.getData[index]['quantity']}",
-                              style: GoogleFonts.poppins(
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.w600,
-                                  letterSpacing: 0.5
-                              ),
-                            ),
-                            // Text("\$ ${homeController.AddToCart[index]['foodPrice']}",
+                            // Text("\$ ${homeController.AddToCart[index]['price'] * homeController.AddToCart[index]['quantity']}",
                             //   style: GoogleFonts.poppins(
-                            //       fontSize: 19,
+                            //       fontSize: 15,
                             //       fontWeight: FontWeight.w600,
                             //       letterSpacing: 0.5
                             //   ),
                             // ),
+                            Text("\$ ${homeController.AddToCart[index]['price']}",
+                              style: GoogleFonts.poppins(
+                                  fontSize: 19,
+                                  fontWeight: FontWeight.w600,
+                                  letterSpacing: 0.5
+                              ),
+                            ),
                           ],
                         ),
                       )

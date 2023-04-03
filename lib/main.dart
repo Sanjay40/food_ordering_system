@@ -7,7 +7,7 @@ Future<void> main() async {
  WidgetsFlutterBinding.ensureInitialized();
  await Firebase.initializeApp();
   runApp(
-    GetMaterialApp(
+    const GetMaterialApp(
       debugShowCheckedModeBanner: false,
       home: SplashScreen(),
     ),

@@ -1,5 +1,4 @@
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:food_ordering_system/controller/getx_controller.dart';
 import 'package:food_ordering_system/view/homescreen.dart';
