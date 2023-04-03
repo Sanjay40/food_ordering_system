@@ -8,9 +8,9 @@ import '../utils/Global.dart';
 
 class DetailsScreen extends StatefulWidget {
   //const DetailsScreen({Key? key}) : super(key: key);
-  //int index;
+  int index;
   QueryDocumentSnapshot data;
-  DetailsScreen({super.key, required this.data});
+  DetailsScreen({super.key, required this.data,required this.index});
 
   @override
   State<DetailsScreen> createState() => _DetailsScreenState();
@@ -28,7 +28,11 @@ class _DetailsScreenState extends State<DetailsScreen> {
   Widget build(BuildContext context) {
     //int index = Get.arguments;
     //print(index);
+    homeController.changeFavouriteValue.value = widget.data['favourite'];
+    print("dtaa addddd ${homeController.changeFavouriteValue.value}");
+    homeController.changeQuantity.value = widget.data['quantity'];
     return Scaffold(
+
       backgroundColor: Colors.grey.shade100,
       appBar: AppBar(
         backgroundColor:Colors.grey.shade100,
@@ -56,94 +60,100 @@ class _DetailsScreenState extends State<DetailsScreen> {
           ),
         ),
         actions: [
-         StreamBuilder(
+         Obx(() => StreamBuilder(
            stream: FirebaseFirestore.instance
                .collection('Order_food_list')
                .doc('All_food_list')
                .collection(homeController.category.value)
                .snapshots(),
-             builder: (context,snapShot){
-               if(snapShot.hasError){
-                 print("hase Error");
-               }
-               else if(snapShot.connectionState == ConnectionState.waiting){
-                 return const Center(
-                   child: CircularProgressIndicator(),
-                 );
-               }
-               else{
-                 return Padding(
-                     padding: const EdgeInsets.only(right: 14),
-                     child: CircleAvatar(
-                       backgroundColor: Colors.white,
-                       child: IconButton(
-                         icon: (widget.data['favourite']== true) ? Icon(Icons.favorite_outlined,
-                           color: Colors.red,
-                           size:23,
-                         ) :  Icon(Icons.favorite_outline,
-                           color: Variable.myClr,
-                           size:23,
-                         ),
-                         onPressed: (){
-                           //print("index : ${widget.index}");
-                           //homeController.changeFavouriteValue = snapShot.data!.docs[widget.index]['foodFavourite'];
-                           if(widget.data['favourite'] == false){
-                             homeController.changeFavouriteValue = true;
-                           }
-                           else
-                             {
-                               homeController.changeFavouriteValue = false;
-                             }
-                           homeController.updateData(index: widget.index, changeFavData: homeController.changeFavouriteValue);
-                           // homeController.changeFavouriteValue = snapShot.data!.docs[widget.index!]['foodFavourite'];
-                           // if(snapShot.data!.docs[widget.index!]['foodFavourite'] == false){
-                           //   //homeController.changeFavouriteValue = true;
-                           //   homeController.changeFavouriteValue = true;
-                           // }
-                           // else
-                           //   {
-                           //     homeController.changeFavouriteValue = false;
-                           //     //homeController.getData[widget.index!]['foodFavourite'] = ("foodFavourite", false);
-                           //     //homeController.changeFavouriteValue = false;
-                           //   }
-                           // homeController.updateData(index: widget.index!, changeFavData: homeController.changeFavouriteValue);
-                           //snapShort.data!.docs[widget.index!]['foodFavourite'] = !snapShort.data!.docs[widget.index!]['foodFavourite'];
-                           // if(homeController.getData[widget.index!]['foodFavourite'] == false)
-                           // {
-                           //   //controller.getData[widget.index!]['foodFavourite'] = true;
-                           //   //controller.changeFavouriteValue = true;
-                           //   homeController.getData[widget.index!]['foodFavourite'] = true;
-                           //   //snapShort.data!.docs[widget.index!]['foodFavourite'] = !snapShort.data!.docs[widget.index!]['foodFavourite'];
-                           // }
-                           // else
-                           // {
-                           //   homeController.getData[widget.index!]['foodFavourite'] = false;
-                           //   //snapShort.data!.docs[widget.index!]['foodFavourite'] = false;
-                           // }
-                           // homeController.updateData(index: widget.index!, changeFavData:
-                           // homeController.getData[widget.index!]['foodFavourite']);
-                           //print(homeController.getData[widget.index!]['foodFavourite']);
-                           // controller.getData[widget.index!]['foodFavourite'] =
-                           // !controller.getData[widget.index!]['foodFavourite'];
-
-                           // if(controller.getData[widget.index!]['foodFavourite'])
-                           //   {
-                           //     controller.getData[widget.index!]['foodFavourite'] = false;
-                           //   }
-                           // else
-                           //   {
-                           //     controller.getData[widget.index!]['foodFavourite'] = true;
-                           //   }
-
-                           //print( controller.getData[widget.index!]['foodFavourite'] = !controller.getData[widget.index!]['foodFavourite']);
-                         },
+           builder: (context,snapShot){
+             if(snapShot.hasError){
+               print("hase Error");
+             }
+             else if(snapShot.connectionState == ConnectionState.waiting){
+               return const Center(
+                 child: CircularProgressIndicator(),
+               );
+             }
+             else{
+               return Padding(
+                   padding: const EdgeInsets.only(right: 14),
+                   child: CircleAvatar(
+                     backgroundColor: Colors.white,
+                     child: IconButton(
+                       icon: (homeController.changeFavouriteValue.value  == true) ? Icon(Icons.favorite_outlined,
+                         color: Colors.red,
+                         size:23,
+                       ) :  Icon(Icons.favorite_outline,
+                         color: Variable.myClr,
+                         size:23,
                        ),
-                     )
-                 );
-               }
-               return Container();
-             },
-         ),
+                       onPressed: (){
+
+                        //widget.data['favourite'] =   widget.data['favourite'];
+                         homeController.changeFavouriteData();
+                         print("hello data ${homeController.changeFavouriteValue.value}");
+                         //widget.data = homeController.changeFavouriteValue.value;
+                         homeController.updateData(index: widget.index, changeFavData: homeController.changeFavouriteValue.value );
+                         //print("index : ${widget.index}");
+                         //homeController.changeFavouriteValue = snapShot.data!.docs[widget.index]['foodFavourite'];
+                         // if(widget.data['favourite'] == false){
+                         //   homeController.changeFavouriteValue = true;
+                         // }
+                         // else
+                         //   {
+                         //     homeController.changeFavouriteValue = false;
+                         //   }
+                         // homeController.updateData(index: widget.index, changeFavData: homeController.changeFavouriteValue);
+                         // homeController.changeFavouriteValue = snapShot.data!.docs[widget.index!]['foodFavourite'];
+                         // if(snapShot.data!.docs[widget.index!]['foodFavourite'] == false){
+                         //   //homeController.changeFavouriteValue = true;
+                         //   homeController.changeFavouriteValue = true;
+                         // }
+                         // else
+                         //   {
+                         //     homeController.changeFavouriteValue = false;
+                         //     //homeController.getData[widget.index!]['foodFavourite'] = ("foodFavourite", false);
+                         //     //homeController.changeFavouriteValue = false;
+                         //   }
+                         // homeController.updateData(index: widget.index!, changeFavData: homeController.changeFavouriteValue);
+                         //snapShort.data!.docs[widget.index!]['foodFavourite'] = !snapShort.data!.docs[widget.index!]['foodFavourite'];
+                         // if(homeController.getData[widget.index!]['foodFavourite'] == false)
+                         // {
+                         //   //controller.getData[widget.index!]['foodFavourite'] = true;
+                         //   //controller.changeFavouriteValue = true;
+                         //   homeController.getData[widget.index!]['foodFavourite'] = true;
+                         //   //snapShort.data!.docs[widget.index!]['foodFavourite'] = !snapShort.data!.docs[widget.index!]['foodFavourite'];
+                         // }
+                         // else
+                         // {
+                         //   homeController.getData[widget.index!]['foodFavourite'] = false;
+                         //   //snapShort.data!.docs[widget.index!]['foodFavourite'] = false;
+                         // }
+                         // homeController.updateData(index: widget.index!, changeFavData:
+                         // homeController.getData[widget.index!]['foodFavourite']);
+                         //print(homeController.getData[widget.index!]['foodFavourite']);
+                         // controller.getData[widget.index!]['foodFavourite'] =
+                         // !controller.getData[widget.index!]['foodFavourite'];
+
+                         // if(controller.getData[widget.index!]['foodFavourite'])
+                         //   {
+                         //     controller.getData[widget.index!]['foodFavourite'] = false;
+                         //   }
+                         // else
+                         //   {
+                         //     controller.getData[widget.index!]['foodFavourite'] = true;
+                         //   }
+
+                         //print( controller.getData[widget.index!]['foodFavourite'] = !controller.getData[widget.index!]['foodFavourite']);
+                       },
+                     ),
+                   )
+               );
+             }
+             return Container();
+           },
+         ))
         ],
       ),
       body: Obx(() => StreamBuilder(
@@ -159,9 +169,9 @@ class _DetailsScreenState extends State<DetailsScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const SizedBox(height: 35,),
-                  const Center(
+                  Center(
                     child: Image(
-                      image: AssetImage('images/spp11.png'),
+                      image: NetworkImage("${widget.data['image']}"),
                       height: 250,
                     ),
                   ),
@@ -271,18 +281,12 @@ class _DetailsScreenState extends State<DetailsScreen> {
                               ),
                               color: Variable.myClr,
                               onPressed: (){
-                                homeController.changeQuantity.value = widget.data['quantity'];
-                                if(homeController.changeQuantity > 1)
-                                {
-                                  homeController.changeQuantity.value --;
-                                }
-                                else{
-                                  homeController.changeQuantity.value = 1;
-                                }
+                                //homeController.changeQuantity.value = widget.data['quantity'];
+                                homeController.changeDecrementQuantity();
                                 homeController.updateQuantity(index: widget.index, changeQuantity: homeController.changeQuantity.value);
                               },
                             ),
-                            Text("${widget.data['quantity']}",
+                            Text("${ homeController.changeQuantity.value}",
                               style: GoogleFonts.poppins(
                                   fontSize: 14,
                                   fontWeight: FontWeight.w700
@@ -294,11 +298,8 @@ class _DetailsScreenState extends State<DetailsScreen> {
                               ),
                               color: Variable.myClr,
                               onPressed: (){
-                                homeController.changeQuantity.value = widget.data['quantity'];
-                                if(homeController.changeQuantity >= 1)
-                                {
-                                  homeController.changeQuantity.value++;
-                                }
+                                //homeController.changeQuantity.value = widget.data['quantity'];
+                                homeController.changeIncrementQuantity();
                                 homeController.updateQuantity(index: widget.index, changeQuantity: homeController.changeQuantity.value);
                                 //print(controller.getData[widget.index]['foodQuantity']);
                               },
@@ -348,7 +349,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text("\$ ${widget.data['price'] * widget.data['quantity']}",
+                              Text("\$ ${widget.data['price'] * homeController.changeQuantity.value}",
                                 style: GoogleFonts.poppins(
                                     fontSize: 24,
                                     fontWeight: FontWeight.w700,

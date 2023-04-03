@@ -73,8 +73,8 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
                           ),
                           alignment: Alignment.center,
                           child: Image(
-                            image: AssetImage('images/spp11.png'),
-                            height: 60,
+                            image: NetworkImage("${controller.getData[index]['image']}"),
+                            height: 50,
                           ),
                         ),
                         Padding(

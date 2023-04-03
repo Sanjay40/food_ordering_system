@@ -20,6 +20,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: Colors.grey.shade100,
       appBar: AppBar(
         backgroundColor: Colors.grey.shade100,
@@ -71,7 +72,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
       body: Obx(
-        () => Column(
+        () => ListView(
           children: [
             const SizedBox(
               height: 20,
@@ -172,35 +173,35 @@ class _HomeScreenState extends State<HomeScreen> {
                 scrollDirection: Axis.horizontal,
                 child: Row(
                   children: [
-                    GestureDetector(
-                      onTap: () {
-                        homeController.category.value = 'All';
-                      },
-                      child: Container(
-                        height: 45,
-                        width: 100,
-                        decoration: BoxDecoration(
-                          color: (homeController.category.value == 'All')
-                              ? Variable.myClr
-                              : Colors.white,
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        alignment: Alignment.center,
-                        child: Text(
-                          "All",
-                          style: GoogleFonts.poppins(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w700,
-                              letterSpacing: 1,
-                              color: (homeController.category.value == 'All')
-                                  ? Colors.white
-                                  : Variable.myClr),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 10,
-                    ),
+                    // GestureDetector(
+                    //   onTap: () {
+                    //     homeController.category.value = 'All';
+                    //   },
+                    //   child: Container(
+                    //     height: 45,
+                    //     width: 100,
+                    //     decoration: BoxDecoration(
+                    //       color: (homeController.category.value == 'All')
+                    //           ? Variable.myClr
+                    //           : Colors.white,
+                    //       borderRadius: BorderRadius.circular(20),
+                    //     ),
+                    //     alignment: Alignment.center,
+                    //     child: Text(
+                    //       "All",
+                    //       style: GoogleFonts.poppins(
+                    //           fontSize: 16,
+                    //           fontWeight: FontWeight.w700,
+                    //           letterSpacing: 1,
+                    //           color: (homeController.category.value == 'All')
+                    //               ? Colors.white
+                    //               : Variable.myClr),
+                    //     ),
+                    //   ),
+                    // ),
+                    // const SizedBox(
+                    //   width: 10,
+                    // ),
                     GestureDetector(
                       onTap: () {
                         homeController.category.value = 'Food';
@@ -317,6 +318,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     .doc('All_food_list')
                     .collection(homeController.category.value)
                     .snapshots(),
+              //stream: FirebaseFirestore.instance.collection('Food_List').where('category',isEqualTo :homeController.category.value ).snapshots(),
                 builder: (context, snapshot) {
                   if (snapshot.hasError) {
                     print("Data is error");
@@ -325,103 +327,102 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: CircularProgressIndicator(),
                     );
                   }
-                  return Expanded(
-                      // height: Get.height,
-                      child: Padding(
+                  return Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: GridView.builder(
-                      itemCount: snapshot.data!.docs.length,
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 2, childAspectRatio: 1 / 1.3),
-                      itemBuilder: (context, index) {
-                        homeController.getData = snapshot.data!.docs;
-                        return Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Container(
-                              height: 250,
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(10),
+                  shrinkWrap: true,
+                  itemCount: snapshot.data!.docs.length,
+                  gridDelegate:
+                      const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2, childAspectRatio: 1 / 1.3),
+                  itemBuilder: (context, index) {
+                    homeController.getData = snapshot.data!.docs;
+                    return Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Container(
+                          height: 250,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                    top: 15, right: 15),
+                                child: Align(
+                                  alignment: Alignment.topRight,
+                                  child: Text(
+                                    "⭐  ${snapshot.data!.docs[index]['rating']}",
+                                    style: GoogleFonts.poppins(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w600,
+                                        color: Colors.grey.shade400),
+                                  ),
+                                ),
                               ),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                        top: 15, right: 15),
-                                    child: Align(
-                                      alignment: Alignment.topRight,
-                                      child: Text(
-                                        "⭐  ${snapshot.data!.docs[index]['rating']}",
-                                        style: GoogleFonts.poppins(
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.w600,
-                                            color: Colors.grey.shade400),
-                                      ),
-                                    ),
-                                  ),
-                                  const SizedBox(
-                                    height: 10,
-                                  ),
-                                  const Center(
-                                    child: Image(
-                                      image: AssetImage('images/spp11.png'),
-                                      height: 100,
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                        left: 20, top: 10),
-                                    child: Text(
-                                      "${snapshot.data!.docs[index]['name']}",
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              Center(
+                                child: Image(
+                                  image: NetworkImage("${snapshot.data!.docs[index]['image']}"),
+                                  height: 100,
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                    left: 20, top: 10),
+                                child: Text(
+                                  "${snapshot.data!.docs[index]['name']}",
+                                  style: GoogleFonts.poppins(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w700,
+                                      color: Variable.myClr),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                    left: 20, top: 5, right: 15),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                      //Text("${snapshot.data!.docs.length - 1}"),
+                                    Text(
+                                      "\$ ${snapshot.data!.docs[index]['price']}",
                                       style: GoogleFonts.poppins(
                                           fontSize: 18,
-                                          fontWeight: FontWeight.w700,
+                                          fontWeight: FontWeight.w600,
                                           color: Variable.myClr),
                                     ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                        left: 20, top: 5, right: 15),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                          //Text("${snapshot.data!.docs.length - 1}"),
-                                        Text(
-                                          "\$ ${snapshot.data!.docs[index]['price']}",
-                                          style: GoogleFonts.poppins(
-                                              fontSize: 18,
-                                              fontWeight: FontWeight.w600,
-                                              color: Variable.myClr),
+                                    GestureDetector(
+                                      onTap: () {
+                                        Get.to(() =>
+                                            DetailsScreen(data: snapshot.data!.docs[index],index: index,));
+                                        print("hello ${ index}");
+                                      },
+                                      child: CircleAvatar(
+                                        radius: 18,
+                                        backgroundColor: Variable.myClr,
+                                        child: const Icon(
+                                          Icons
+                                              .shopping_cart_checkout_outlined,
+                                          color: Colors.white,
+                                          size: 15,
                                         ),
-                                        GestureDetector(
-                                          onTap: () {
-                                            Get.to(() =>
-                                                DetailsScreen(data: snapshot.data!.docs[index]));
-                                            print("hello ${snapshot.data!.docs[index]}");
-                                          },
-                                          child: CircleAvatar(
-                                            radius: 18,
-                                            backgroundColor: Variable.myClr,
-                                            child: const Icon(
-                                              Icons
-                                                  .shopping_cart_checkout_outlined,
-                                              color: Colors.white,
-                                              size: 15,
-                                            ),
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  )
-                                ],
-                              ),
-                            ));
-                      },
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              )
+                            ],
+                          ),
+                        ));
+                  },
                     ),
-                  ));
+                  );
                 }
                 //},
                 ),

@@ -68,8 +68,8 @@ class _AddToCartScreenState extends State<AddToCartScreen> {
                           borderRadius: BorderRadius.circular(10),
                         ),
                         alignment: Alignment.center,
-                        child: const Image(
-                          image: AssetImage('images/spp11.png'),
+                        child: Image(
+                          image: NetworkImage("${homeController.AddToCart[index]['image']}"),
                           height: 60,
                         ),
                       ),
